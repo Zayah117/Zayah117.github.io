@@ -512,14 +512,16 @@ function updatePositions() {
 
   var items = document.querySelectorAll('.mover');
 
+  // Changed so this number is calculated OUTSIDE the for loop
+  // This stops Forced Synchronous Layout from happening
+  var num = document.body.scrollTop / 1250;
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin((num) + (i % 5))
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
-  runWorker();
-
-  /* Let this code be handled by webworker
+  /* Old loop
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
